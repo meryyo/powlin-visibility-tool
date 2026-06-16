@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>POWLIN — Hotel AI Tracker</title>
+  <title>POWLIN â Hotel AI Tracker</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -500,10 +500,10 @@
 
   <!-- CONFIG -->
   <div class="card">
-    <h2>Configuración del test</h2>
+    <h2>ConfiguraciÃ³n del test</h2>
 
     <div class="form-group" style="margin-bottom:20px">
-      <label>Prompts a testear <span style="font-weight:400;color:var(--muted)">(máx. 5)</span></label>
+      <label>Prompts a testear <span style="font-weight:400;color:var(--muted)">(mÃ¡x. 5)</span></label>
       <div class="prompts-dropdown">
         <button class="prompts-toggle" onclick="togglePromptsList()" type="button">
           <span id="prompts-toggle-label">Selecciona prompts</span>
@@ -519,7 +519,7 @@
     <div class="form-group" style="margin-bottom:20px">
       <label>Idiomas</label>
       <div class="selector-group lang-group">
-        <button class="selector-btn active" data-lang="ES" onclick="selectLang(this)">Español</button>
+        <button class="selector-btn active" data-lang="ES" onclick="selectLang(this)">EspaÃ±ol</button>
         <button class="selector-btn active" data-lang="EN" onclick="selectLang(this)">English</button>
       </div>
     </div>
@@ -580,7 +580,7 @@
     </div>
 
     <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
-      <button class="btn-secondary" onclick="resetForm()">Nuevo análisis</button>
+      <button class="btn-secondary" onclick="resetForm()">Nuevo anÃ¡lisis</button>
       <button class="btn-secondary" onclick="window.print()">Imprimir informe</button>
     </div>
   </div>
@@ -603,7 +603,7 @@
 </main>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────
+// âââ CONFIG âââââââââââââââââââââââââââââââââââââââââââââââ
 const OPENROUTER_API_KEY = localStorage.getItem("openrouter_api_key") || "";
 const PABBLY_WEBHOOK     = "https://connect.pabbly.com/webhook-listener/webhook/IjU3NjYwNTY5MDYzMzA0Mzc1MjZiNTUzNSI_3D_pc/IjU3NjcwNTY5MDYzNzA0MzI1MjY1NTUzMTUxMzEi_pc";
 
@@ -618,36 +618,36 @@ const IA_MODELS = {
 
 // 20 prompts base (variable: {{city}})
 const ALL_PROMPTS = [
-  { id: "P01", block: "Genérico",    es: "¿Qué hoteles me recomiendas en {{city}}?",                                                        en: "What hotels do you recommend in {{city}}?" },
-  { id: "P02", block: "Genérico",    es: "¿Cuáles son los mejores hoteles para alojarse en {{city}}?",                                      en: "What are the best hotels to stay in {{city}}?" },
-  { id: "P03", block: "Genérico",    es: "¿Dónde es mejor dormir en {{city}}?",                                                             en: "Where is the best place to sleep in {{city}}?" },
-  { id: "P04", block: "Genérico",    es: "¿Qué zonas son buenas para alojarse en {{city}} y qué hoteles hay allí?",                         en: "What areas are good to stay in {{city}} and what hotels are there?" },
-  { id: "P05", block: "Tipo viajero",es: "¿Qué hotel recomendarías en {{city}} para una escapada de fin de semana?",                        en: "What hotel would you recommend in {{city}} for a weekend getaway?" },
-  { id: "P06", block: "Tipo viajero",es: "¿Qué hotel es buena opción en {{city}} para una estancia tranquila?",                             en: "What hotel is a good option in {{city}} for a peaceful stay?" },
-  { id: "P07", block: "Tipo viajero",es: "¿Dónde alojarse en {{city}} si quiero estar cerca de los principales puntos de interés?",         en: "Where to stay in {{city}} if I want to be near the main points of interest?" },
-  { id: "P08", block: "Tipo viajero",es: "Busco un hotel en {{city}} bien ubicado para conocer la ciudad, ¿cuál recomiendas?",              en: "I'm looking for a well-located hotel in {{city}} to explore the city, which do you recommend?" },
-  { id: "P09", block: "Tipo viajero",es: "¿Qué hotel recomendarías en {{city}} para disfrutar del ambiente local?",                         en: "What hotel would you recommend in {{city}} to enjoy the local atmosphere?" },
-  { id: "P10", block: "Experiencia", es: "¿Qué hotel es buena opción en {{city}} si quiero moverme a pie?",                                 en: "What hotel is a good option in {{city}} if I want to get around on foot?" },
-  { id: "P11", block: "Experiencia", es: "¿Qué hotel elegirías en {{city}} para una estancia cómoda y sin complicaciones?",                 en: "What hotel would you choose in {{city}} for a comfortable and hassle-free stay?" },
-  { id: "P12", block: "Experiencia", es: "¿Qué hoteles de {{city}} suelen recomendar más los viajeros?",                                    en: "Which hotels in {{city}} do travelers recommend the most?" },
-  { id: "P13", block: "Experiencia", es: "¿Qué hotel elegirías en {{city}} si buscas buena relación calidad-precio?",                       en: "What hotel would you choose in {{city}} if you're looking for good value for money?" },
-  { id: "P14", block: "Experiencia", es: "¿Qué hoteles de {{city}} son una buena alternativa a los más conocidos?",                         en: "What hotels in {{city}} are a good alternative to the most well-known ones?" },
-  { id: "P15", block: "Comparativa", es: "Si tuvieras que recomendar un hotel en {{city}}, ¿cuál sería y por qué?",                         en: "If you had to recommend a hotel in {{city}}, which would it be and why?" },
-  { id: "P16", block: "Comparativa", es: "¿Qué hotel en {{city}} recomendarías a alguien que quiere evitar los hoteles más turísticos?",    en: "What hotel in {{city}} would you recommend to someone who wants to avoid the most touristy hotels?" },
-  { id: "P17", block: "Comparativa", es: "¿Qué hotel es buena opción en {{city}} si busco algo sencillo pero bien ubicado?",                en: "What hotel is a good option in {{city}} if I'm looking for something simple but well-located?" },
-  { id: "P18", block: "Comparativa", es: "¿Qué hotel de {{city}} tiene mejor reputación entre los viajeros?",                               en: "Which hotel in {{city}} has the best reputation among travelers?" },
-  { id: "P19", block: "Afinado",     es: "¿Cuál es el hotel más recomendado en {{city}} según las valoraciones de los usuarios?",           en: "What is the most recommended hotel in {{city}} according to user reviews?" },
-  { id: "P20", block: "Afinado",     es: "¿Qué hotel en {{city}} destacarías por su ubicación y comodidad?",                                en: "What hotel in {{city}} would you highlight for its location and comfort?" },
+  { id: "P01", block: "GenÃ©rico",    es: "Â¿QuÃ© hoteles me recomiendas en {{city}}?",                                                        en: "What hotels do you recommend in {{city}}?" },
+  { id: "P02", block: "GenÃ©rico",    es: "Â¿CuÃ¡les son los mejores hoteles para alojarse en {{city}}?",                                      en: "What are the best hotels to stay in {{city}}?" },
+  { id: "P03", block: "GenÃ©rico",    es: "Â¿DÃ³nde es mejor dormir en {{city}}?",                                                             en: "Where is the best place to sleep in {{city}}?" },
+  { id: "P04", block: "GenÃ©rico",    es: "Â¿QuÃ© zonas son buenas para alojarse en {{city}} y quÃ© hoteles hay allÃ­?",                         en: "What areas are good to stay in {{city}} and what hotels are there?" },
+  { id: "P05", block: "Tipo viajero",es: "Â¿QuÃ© hotel recomendarÃ­as en {{city}} para una escapada de fin de semana?",                        en: "What hotel would you recommend in {{city}} for a weekend getaway?" },
+  { id: "P06", block: "Tipo viajero",es: "Â¿QuÃ© hotel es buena opciÃ³n en {{city}} para una estancia tranquila?",                             en: "What hotel is a good option in {{city}} for a peaceful stay?" },
+  { id: "P07", block: "Tipo viajero",es: "Â¿DÃ³nde alojarse en {{city}} si quiero estar cerca de los principales puntos de interÃ©s?",         en: "Where to stay in {{city}} if I want to be near the main points of interest?" },
+  { id: "P08", block: "Tipo viajero",es: "Busco un hotel en {{city}} bien ubicado para conocer la ciudad, Â¿cuÃ¡l recomiendas?",              en: "I'm looking for a well-located hotel in {{city}} to explore the city, which do you recommend?" },
+  { id: "P09", block: "Tipo viajero",es: "Â¿QuÃ© hotel recomendarÃ­as en {{city}} para disfrutar del ambiente local?",                         en: "What hotel would you recommend in {{city}} to enjoy the local atmosphere?" },
+  { id: "P10", block: "Experiencia", es: "Â¿QuÃ© hotel es buena opciÃ³n en {{city}} si quiero moverme a pie?",                                 en: "What hotel is a good option in {{city}} if I want to get around on foot?" },
+  { id: "P11", block: "Experiencia", es: "Â¿QuÃ© hotel elegirÃ­as en {{city}} para una estancia cÃ³moda y sin complicaciones?",                 en: "What hotel would you choose in {{city}} for a comfortable and hassle-free stay?" },
+  { id: "P12", block: "Experiencia", es: "Â¿QuÃ© hoteles de {{city}} suelen recomendar mÃ¡s los viajeros?",                                    en: "Which hotels in {{city}} do travelers recommend the most?" },
+  { id: "P13", block: "Experiencia", es: "Â¿QuÃ© hotel elegirÃ­as en {{city}} si buscas buena relaciÃ³n calidad-precio?",                       en: "What hotel would you choose in {{city}} if you're looking for good value for money?" },
+  { id: "P14", block: "Experiencia", es: "Â¿QuÃ© hoteles de {{city}} son una buena alternativa a los mÃ¡s conocidos?",                         en: "What hotels in {{city}} are a good alternative to the most well-known ones?" },
+  { id: "P15", block: "Comparativa", es: "Si tuvieras que recomendar un hotel en {{city}}, Â¿cuÃ¡l serÃ­a y por quÃ©?",                         en: "If you had to recommend a hotel in {{city}}, which would it be and why?" },
+  { id: "P16", block: "Comparativa", es: "Â¿QuÃ© hotel en {{city}} recomendarÃ­as a alguien que quiere evitar los hoteles mÃ¡s turÃ­sticos?",    en: "What hotel in {{city}} would you recommend to someone who wants to avoid the most touristy hotels?" },
+  { id: "P17", block: "Comparativa", es: "Â¿QuÃ© hotel es buena opciÃ³n en {{city}} si busco algo sencillo pero bien ubicado?",                en: "What hotel is a good option in {{city}} if I'm looking for something simple but well-located?" },
+  { id: "P18", block: "Comparativa", es: "Â¿QuÃ© hotel de {{city}} tiene mejor reputaciÃ³n entre los viajeros?",                               en: "Which hotel in {{city}} has the best reputation among travelers?" },
+  { id: "P19", block: "Afinado",     es: "Â¿CuÃ¡l es el hotel mÃ¡s recomendado en {{city}} segÃºn las valoraciones de los usuarios?",           en: "What is the most recommended hotel in {{city}} according to user reviews?" },
+  { id: "P20", block: "Afinado",     es: "Â¿QuÃ© hotel en {{city}} destacarÃ­as por su ubicaciÃ³n y comodidad?",                                en: "What hotel in {{city}} would you highlight for its location and comfort?" },
 ];
 
-// ─── STATE ────────────────────────────────────────────────
+// âââ STATE ââââââââââââââââââââââââââââââââââââââââââââââââ
 let selectedLangs    = new Set(["ES","EN"]);
 let selectedPromptIds = [];
 let results          = [];
 let totalCalls       = 0;
 let completedCalls   = 0;
 
-// ─── PROMPTS DROPDOWN ─────────────────────────────────────
+// âââ PROMPTS DROPDOWN âââââââââââââââââââââââââââââââââââââ
 function buildPromptsList() {
   const inner = document.getElementById('prompts-list-inner');
   let currentBlock = '';
@@ -681,7 +681,7 @@ function togglePrompt(id) {
     if (selectedPromptIds.length >= 5) {
       // desmarcar el checkbox
       document.querySelector(`.prompt-item input[value="${id}"]`).checked = false;
-      alert('Máximo 5 prompts. Desmarca uno antes de añadir otro.');
+      alert('MÃ¡ximo 5 prompts. Desmarca uno antes de aÃ±adir otro.');
       return;
     }
     selectedPromptIds.push(id);
@@ -704,7 +704,7 @@ function updateSelectedPreview() {
     if (!p) return;
     const div = document.createElement('div');
     div.className = 'prompt-preview';
-    div.innerHTML = `<span><strong>${p.id}</strong> — ${p.es.length > 60 ? p.es.slice(0,60)+'…' : p.es}</span>
+    div.innerHTML = `<span><strong>${p.id}</strong> â ${p.es.length > 60 ? p.es.slice(0,60)+'â¦' : p.es}</span>
       <button class="prompt-preview-remove" onclick="removePrompt('${id}')" type="button">x</button>`;
     preview.appendChild(div);
   });
@@ -727,7 +727,7 @@ document.addEventListener('click', e => {
 });
 
 
-// ─── API KEY ──────────────────────────────────────────────
+// âââ API KEY ââââââââââââââââââââââââââââââââââââââââââââââ
 function saveKey(val) {
   localStorage.setItem("openrouter_api_key", val);
   document.getElementById("key-status").textContent = val ? "Guardada en este navegador" : "";
@@ -786,11 +786,11 @@ function getSelectedIAs() {
 
 function getSelectedPrompts() {
   // Distribuidos por bloque: tomar los primeros N de forma representativa
-  const picks = [0, 4, 9, 14, 18]; // índices representativos: P01,P05,P10,P15,P19
+  const picks = [0, 4, 9, 14, 18]; // Ã­ndices representativos: P01,P05,P10,P15,P19
   return picks.slice(0, selectedPrompts).map(i => ALL_PROMPTS[i]);
 }
 
-// ─── MAIN TEST ────────────────────────────────────────────
+// âââ MAIN TEST ââââââââââââââââââââââââââââââââââââââââââââ
 async function runTest() {
   const hotelName  = document.getElementById('hotel-name').value.trim();
   const city       = document.getElementById('hotel-city').value.trim();
@@ -799,7 +799,7 @@ async function runTest() {
   const ias        = getSelectedIAs();
 
   const apiKey = localStorage.getItem("openrouter_api_key") || "";
-  if (!apiKey) { alert('Introduce tu API Key de OpenRouter en la sección Conexiones.'); return; }
+  if (!apiKey) { alert('Introduce tu API Key de OpenRouter en la secciÃ³n Conexiones.'); return; }
   if (!hotelName || !city)         { alert('Por favor introduce el nombre del hotel y la ciudad.'); return; }
   if (ias.length === 0)            { alert('Selecciona al menos una IA.'); return; }
   if (selectedPromptIds.length === 0) { alert('Selecciona al menos un prompt.'); return; }
@@ -838,7 +838,7 @@ async function runTest() {
           <td style="font-size:12px;max-width:220px">${promptText}</td>
           <td>${lang}</td>
           <td><span class="badge badge-loading"><span class="spinner"></span> Analizando</span></td>
-          <td>—</td>
+          <td>â</td>
         `;
         tbody.appendChild(tr);
 
@@ -847,7 +847,7 @@ async function runTest() {
     }
   }
 
-  // Ejecutar en paralelo (máx 5 simultáneas)
+  // Ejecutar en paralelo (mÃ¡x 5 simultÃ¡neas)
   await runWithConcurrency(tasks, 5);
 
   showSummary(hotelName, city);
@@ -876,7 +876,7 @@ async function processTask({ prompt, lang, ia, promptText, rowId, hotelName, cit
     result.excerpt   = fullText.slice(0, 1900);
     result.sources   = extractSources(fullText);
 
-    // 2. Detección de mención del hotel
+    // 2. DetecciÃ³n de menciÃ³n del hotel
     result.appears = await detectMention(fullText, hotelName, aliases);
 
     // 3. Actualizar fila en tabla
@@ -919,8 +919,8 @@ async function callOpenRouter(model, prompt) {
 async function detectMention(text, hotelName, aliases) {
   const allNames = [hotelName, ...aliases.split(',').map(a => a.trim()).filter(Boolean)].join(', ');
   const detectionPrompt = `Analiza si el siguiente texto menciona el hotel "${hotelName}" o alguno de sus aliases: ${allNames}.
-Responde ÚNICAMENTE con "YES" si aparece mencionado (aunque sea parcialmente, con variaciones o alias), o "NO" si no aparece en absoluto.
-No expliques nada más.
+Responde ÃNICAMENTE con "YES" si aparece mencionado (aunque sea parcialmente, con variaciones o alias), o "NO" si no aparece en absoluto.
+No expliques nada mÃ¡s.
 
 TEXTO:
 ${text.slice(0, 2000)}`;
@@ -960,8 +960,8 @@ function updateRow(rowId, result) {
     ? '<span class="badge badge-green">APARECE</span>'
     : '<span class="badge badge-red">NO APARECE</span>';
   const excerpt = result.excerpt
-    ? `<div class="excerpt">${result.excerpt.replace(/</g,'&lt;').slice(0,120)}…</div>`
-    : '—';
+    ? `<div class="excerpt">${result.excerpt.replace(/</g,'&lt;').slice(0,120)}â¦</div>`
+    : 'â';
   tr.querySelector('td:nth-child(4)').innerHTML = badge;
   tr.querySelector('td:nth-child(5)').innerHTML = excerpt;
 }
@@ -998,10 +998,10 @@ function updateProgress() {
   document.getElementById('progress-bar').style.width = pct + '%';
   document.getElementById('progress-count').textContent = `${completedCalls} / ${totalCalls}`;
   document.querySelector('#progress-section h2').textContent =
-    completedCalls === totalCalls ? 'Análisis completado' : 'Analizando...';
+    completedCalls === totalCalls ? 'AnÃ¡lisis completado' : 'Analizando...';
 }
 
-// ─── SUMMARY ──────────────────────────────────────────────
+// âââ SUMMARY ââââââââââââââââââââââââââââââââââââââââââââââ
 function showSummary(hotelName, city) {
   const total    = results.length;
   const appears  = results.filter(r => r.appears).length;
@@ -1052,15 +1052,15 @@ function showSummary(hotelName, city) {
   if (score === 0) {
     verdictBox.className = 'verdict-box red-box';
     verdictBox.querySelector('h3').textContent = `${hotelName} es invisible para la IA`;
-    verdictBox.querySelector('p').textContent  = `En ninguno de los ${total} tests realizados en ${selectedIAs.length} IAs diferentes, el hotel ${hotelName} aparece como recomendación. Cuando un viajero pregunta a ChatGPT, Perplexity, Gemini u otras IAs por hoteles en ${city}, su hotel sencillamente no existe. Powlin puede cambiar eso.`;
+    verdictBox.querySelector('p').textContent  = `En ninguno de los ${total} tests realizados en ${selectedIAs.length} IAs diferentes, el hotel ${hotelName} aparece como recomendaciÃ³n. Cuando un viajero pregunta a ChatGPT, Perplexity, Gemini u otras IAs por hoteles en ${city}, su hotel sencillamente no existe. Powlin puede cambiar eso.`;
   } else if (score < 40) {
     verdictBox.className = 'verdict-box red-box';
     verdictBox.querySelector('h3').textContent = `${hotelName} tiene visibilidad muy baja`;
-    verdictBox.querySelector('p').textContent  = `Solo aparece en el ${score}% de los tests. La gran mayoría de viajeros que consultan a una IA sobre hoteles en ${city} no encontrarán ${hotelName}. Hay una oportunidad clara de mejora.`;
+    verdictBox.querySelector('p').textContent  = `Solo aparece en el ${score}% de los tests. La gran mayorÃ­a de viajeros que consultan a una IA sobre hoteles en ${city} no encontrarÃ¡n ${hotelName}. Hay una oportunidad clara de mejora.`;
   } else {
     verdictBox.className = 'verdict-box green-box';
     verdictBox.querySelector('h3').textContent = `${hotelName} tiene presencia en IA`;
-    verdictBox.querySelector('p').textContent  = `Aparece en el ${score}% de los tests. Tiene una base de visibilidad, pero aún hay IAs y prompts donde no aparece. Powlin puede consolidar y ampliar esa presencia.`;
+    verdictBox.querySelector('p').textContent  = `Aparece en el ${score}% de los tests. Tiene una base de visibilidad, pero aÃºn hay IAs y prompts donde no aparece. Powlin puede consolidar y ampliar esa presencia.`;
   }
 
   document.getElementById('summary-section').style.display = 'block';
