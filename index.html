@@ -549,8 +549,6 @@
       }
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 
@@ -669,7 +667,7 @@
 
     <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
       <button class="btn-secondary" onclick="resetForm()">New analysis</button>
-      <button class="btn-secondary" onclick="exportPDF()">Download PDF</button>
+      <button class="btn-secondary" onclick="window.print()">Print report</button>
     </div>
   </div>
 
@@ -1196,89 +1194,6 @@ function closeModal(e) {
   if (e.target === document.getElementById('response-modal')) {
     document.getElementById('response-modal').classList.remove('open');
   }
-}
-
-function exportPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-
-  const hotelName = document.getElementById('hotel-name').value || 'Hotel';
-  const city      = document.getElementById('hotel-city').value || '';
-  const dateStr   = new Date().toLocaleDateString('en-GB');
-
-  // ── Header ──
-  doc.setFillColor(110, 160, 1);
-  doc.rect(0, 0, 297, 18, 'F');
-  doc.setTextColor(255, 255, 255);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(13);
-  doc.text('POWLIN — Hotel AI Tracker', 14, 12);
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.text(`${hotelName}  |  ${city}  |  ${dateStr}`, 297 - 14, 12, { align: 'right' });
-
-  // ── Summary numbers ──
-  const appears   = results.filter(r => r.appears).length;
-  const total     = results.length;
-  const pct       = total ? Math.round(appears / total * 100) : 0;
-  doc.setTextColor(30, 30, 30);
-  doc.setFontSize(10);
-  doc.setFont('helvetica', 'bold');
-  doc.text(`Visibility: ${appears} / ${total} tests (${pct}%)`, 14, 28);
-
-  // ── Results table ──
-  const isES = selectedLang === 'ES';
-  const head = [[
-    isES ? 'IA' : 'AI',
-    'Prompt',
-    isES ? 'Resultado' : 'Result'
-  ]];
-  const body = results.map(r => [
-    IA_MODELS[r.ia].name,
-    r.promptText.slice(0, 120),
-    r.appears
-      ? (isES ? 'APARECE' : 'APPEARS')
-      : (isES ? 'NO APARECE' : 'NOT FOUND')
-  ]);
-
-  doc.autoTable({
-    head,
-    body,
-    startY: 32,
-    margin: { left: 14, right: 14 },
-    styles: { fontSize: 8, cellPadding: 3 },
-    headStyles: { fillColor: [110, 160, 1], textColor: 255, fontStyle: 'bold' },
-    alternateRowStyles: { fillColor: [245, 250, 235] },
-    columnStyles: {
-      0: { cellWidth: 28 },
-      1: { cellWidth: 'auto' },
-      2: { cellWidth: 30, halign: 'center' }
-    },
-    didDrawCell(data) {
-      if (data.section === 'body' && data.column.index === 2) {
-        const val = data.cell.raw;
-        const appears = val === 'APARECE' || val === 'APPEARS';
-        doc.setFillColor(appears ? 198 : 254, appears ? 246 : 215, appears ? 213 : 215);
-        doc.roundedRect(data.cell.x + 2, data.cell.y + 2, data.cell.width - 4, data.cell.height - 4, 2, 2, 'F');
-        doc.setTextColor(appears ? 39 : 155, appears ? 103 : 44, appears ? 73 : 44);
-        doc.setFontSize(7);
-        doc.setFont('helvetica', 'bold');
-        doc.text(val, data.cell.x + data.cell.width / 2, data.cell.y + data.cell.height / 2 + 0.5, { align: 'center' });
-      }
-    }
-  });
-
-  // ── Footer CTA ──
-  const pageH = doc.internal.pageSize.getHeight();
-  const pageW = doc.internal.pageSize.getWidth();
-  doc.setDrawColor(226, 232, 240);
-  doc.line(14, pageH - 12, pageW - 14, pageH - 12);
-  doc.setTextColor(110, 160, 1);
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Activate Powlin from only 49€/month — powlin.com', pageW / 2, pageH - 6, { align: 'center' });
-
-  doc.save(`powlin-tracker-${hotelName.replace(/\s+/g,'-').toLowerCase()}-${dateStr.replace(/\//g,'-')}.pdf`);
 }
 
 function resetForm() {
